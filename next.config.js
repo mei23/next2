@@ -31,6 +31,29 @@ module.exports = {
         ]
       }
     )
+    config.output.publicPath = `./${config.output.publicPath}`
     return config
   }
+  ,
+  exportPathMap: function() {
+    // Node.js サーバー 下でなく、static web ホスティング用に出力することができる
+    // ※ サーバー側ロジックを使ってない場合に限る
+    return {
+      '/index.html': { page: '/' },
+
+      // static web で x => x.html をルーティングさせたいと時はRewriteとかに頼る？
+      // /x/index.html のように出力ることもできるが、Node.js <=> static web で階層が変わって困った
+      '/x.html': { page: '/x' },
+
+      // 特定のクエリ文字列指定をシミュレート(fileプロトコルとかで使う？)
+      '/x-1.html': { page: '/x', query: { key1: '1' } },
+
+      // 2階層目に出力するとassetが読めない
+      // assetPrefixを絶対パスにすればいいが、今度はデプロイパスを変えられなくなる
+      // 2階層目はそもそも使わないほうがいいかも
+      '/y-z.html': { page: '/y/z' },
+    }
+  }
+  ,
+  assetPrefix: './'
 }

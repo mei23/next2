@@ -2,7 +2,7 @@
 # next2
 
 Next.js で以下を行うテスト
-* ｓｃss をインポートする
+* scss をインポートする
 * Static HTML をエクスポートする
 
 ## Node.js下で実行
